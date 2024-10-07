@@ -13,22 +13,23 @@
 			<field name="arch" type="xml">
 				<form string="Plan Sale Order">
 					<header>
-						<button string="Xác nhận" type="object" name="action_confirm" class="btn-primary" options="{'invisible': [('state', '!=', 'draft')]}" />
-						<button string="Hủy" type="object" name="action_cancel" class="btn-secondary" options="{'invisible': [('state', '!=', 'draft')]}" />
-						<field name="state" widget="statusbar" statusbar_visible="draft, confirmed, cancel" />
+						<button string="Gửi Duyệt" type="object" name="action_sent_for_approval" class="btn-primary" options="{'invisible': [('state', '!=', 'draft')]}" />
+						<button string="Đã duyệt" type="object" name="action_confirm" class="btn-primary" options="{'invisible': [('state', '!=', 'pending')]}" />
+						<button string="Từ chối" type="object" name="action_cancel" class="btn-secondary" options="{'invisible': [('state', '!=', 'pending')]}" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,pending, approved, rejected" />
 					</header>
 					<sheet>
 						<group>
 							<field name="name" required="1" />
-							<field name="quotation_template_ids" readonly="1"/>
+							<field name="sale_order_id" readonly="1"/>
 							<field name="plan_sale_order_info" required="1" />
 							<field name= "approver_ids" />
 						</group>
 					</sheet>
-					<footer>
-						<button string="Lưu" type="object" name="save_action" class="oe_highlight" options="{'invisible': [('state', '!=', 'draft')]}" />
-						<button string="Đóng" class="btn-secondary" special="cancel" />
-					</footer>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
 				</form>
 			</field>
 		</record>
@@ -47,13 +48,13 @@
 			<field name="arch" type="xml">
 				<tree string="Plan Sale Order">
 					<field name="name" />
-					<field name="quotation_template_ids" />
+					<field name="sale_order_id" />
 					<field name="plan_sale_order_info" />
 					<field name= "approver_ids" />
 					<field name= "state"
 					decoration-success="state == 'confirmed'"
 					decoration-danger="state == 'canceled'"
-					decoration-info="state == 'draft'"
+					decoration-info="state == 'pending'"
 					widget="badge"
 					/>
 				</tree>

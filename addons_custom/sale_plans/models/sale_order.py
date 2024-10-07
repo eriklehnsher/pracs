@@ -10,9 +10,9 @@ class SaleOrder(models.Model):
     def action_create_plan_sale_order(self):
         self.ensure_one()
         plan_sale_order = self.env['plan.sale.order'].create({
-            'name': self.name,
-            'quotation_template_ids': self.id,
-            'plan_sale_order_info': self.note,
+            'name': 'Kế hoạch bán hàng cho đơn hàng ' + self.name,
+            'sale_order_id': self.id,
+            'plan_sale_order_info': 'Nội dung chi tiết ',
         })
         self.plan_sale_order_id = plan_sale_order.id
         return {
