@@ -52,3 +52,4 @@ class PlanSaleOrder(models.Model):
                 partner_ids=[approver.id],
             )
         return True
+
