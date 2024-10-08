@@ -25,7 +25,9 @@ class PlanSaleOrder(models.Model):
         string="Trạng thái",
         default="pending",
     )
-
+    created_at = fields.Datetime(string="Ngày tạo", default=fields.Datetime.now)
+    # ngày tạo
+    updated_at = fields.Datetime(string="Ngày cập nhật", default=fields.Datetime.now)
     def action_confirm(self):
         for rec in self:
             rec.state = "approved"

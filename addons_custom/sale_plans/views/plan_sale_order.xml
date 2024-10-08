@@ -43,13 +43,17 @@
 			<field name="model">plan.sale.order</field>
 			<field name="arch" type="xml">
 				<tree string="Plan Sale Order">
-					<field name="name" /> 
+					<field name="name" />
 					<field name="sale_order_id" />
-					<field name="plan_sale_order_info" required="True" />
-					<field name="state"
+					<field name="plan_sale_order_info" />
+					<field name= "approver_ids" />
+					<field name="created_at" />
+					<field name="updated_at" />
+					<field name= "state"
 					decoration-success="state == 'approved'"
 					decoration-danger="state == 'rejected'"
 					decoration-warning="state == 'pending'"
+					decoration-info="state == 'draft'"
 					widget="badge"
 					/>
 				</tree>
