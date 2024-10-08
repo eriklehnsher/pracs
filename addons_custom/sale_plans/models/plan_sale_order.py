@@ -42,7 +42,7 @@ class PlanSaleOrder(models.Model):
         if not self.approver_ids:
             raise UserError("Vui lòng chọn người phê duyệt")
         self.state = "pending"
-        self.message_post(body=f"Kế hoạch đã được gửi phê duyệt", message_type="notification")
+  
         for approver in self.approver_ids:
             self.message_post(
                 body=f"Kế hoạch đã được gửi phê duyệt",
