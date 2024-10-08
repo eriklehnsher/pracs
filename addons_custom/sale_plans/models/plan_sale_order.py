@@ -16,14 +16,14 @@ class PlanSaleOrder(models.Model):
         string="Thông tin kế hoạch", required=True
     )  # thông tin kế hoạch
     state = fields.Selection(
-        [ 
+        [  ("draft", "Nháp"),
             ('pending', 'Chờ xác nhận'),
-            ("draft", "Nháp"),
+           
             ("approved", "Duyệt Kế hoạch"),
             ("rejected", "Từ chối"),
         ],
         string="Trạng thái",
-        default="pending",
+        default="draft",
     )
     created_at = fields.Datetime(string="Ngày tạo", default=fields.Datetime.now)
     # ngày tạo

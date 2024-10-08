@@ -29,12 +29,12 @@
 				</form>
 			</field>
 		</record>
-		<record id="action_create_plan_sale_order" model="ir.actions.act_window">
+		<!-- <record id="action_create_plan_sale_order" model="ir.actions.act_window">
 			<field name="name">Tạo Phương án KD</field>
 			<field name="res_model">plan.sale.order</field>
 			<field name="view_mode">form,tree</field>
 			<field name="view_id" ref="plan_sale_order_form" />
-		</record>
+		</record> -->
 		
 
 		<!-- get_list -->
@@ -45,7 +45,7 @@
 				<tree string="Plan Sale Order">
 					<field name="name" />
 					<field name="sale_order_id" />
-					<field name="plan_sale_order_info" />
+					<!-- <field name="plan_sale_order_info" /> -->
 					<field name= "approver_ids" />
 					<field name="created_at" />
 					<field name="updated_at" />
@@ -54,13 +54,12 @@
 					decoration-danger="state == 'rejected'"
 					decoration-warning="state == 'pending'"
 					decoration-info="state == 'draft'"
-					widget="badge"
-					/>
+					widget="badge"/>
 				</tree>
 			</field>
 		</record>
 		<record id="action_create_plan_sale_order" model="ir.actions.act_window">
-			<field name="name">Danh sách Phương án KD</field>
+			<field name="name">Phương án KD</field>
 			<field name="res_model">plan.sale.order</field>
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="plan_sale_order_tree" />
