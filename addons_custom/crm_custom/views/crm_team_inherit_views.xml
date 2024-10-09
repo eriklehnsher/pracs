@@ -3,21 +3,75 @@
         <record id="crm_team_inherit_view_form" model="ir.ui.view">
             <field name="name">crm.team.inherit.form</field>
             <field name="model">crm.team</field>
-            <field name="inherit_id" ref="crm.crm_team_view_form"/>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//page[@name='members_users']" position="after">
-                    <page string ="Chỉ tiêu doanh số theo tháng (trước VAT)" name="target_amount">
-                        <field name="target_ids" widget="one2many_list">
-                            <tree editable="bottom">
-                                <field name="member_ids"/>
-                                <field name="month"/>
-                                <field name="target_amount"/>
-                            </tree>
-                        </field>
+                <xpath expr="//page[@name='members_users']" position="before">
+                    <page string ="Chỉ tiêu doanh số theo tháng (trước VAT)" name="taget" >
+                        <group>
+                            <div>
+                                <label for="target_jan" class="o_form_label">Tháng 1</label>
+                                <field name="target_jan"/>
+                            </div>
+                            <div>
+                                <label for="target_feb" class="o_form_label">Tháng 2</label>
+                                <field name="target_feb"/>
+                            </div>
+                            <div>
+                                <label for="target_mar" class="o_form_label">Tháng 3</label>
+                                <field name="target_mar"/>
+                            </div>
+                            <div>
+                                <label for="target_apr" class="o_form_label">Tháng 4</label>
+                                <field name="target_apr"/>
+                            </div>
+                            <div>
+                                <label for="target_may" class="o_form_label">Tháng 5</label>
+                                <field name="target_may"/>
+                            </div>
+                            <div>
+                                <label for="target_jun" class="o_form_label">Tháng 6</label>
+                                <field name="target_jun"/>
+                            </div>
+                            <div>
+                                <label for="target_jul" class="o_form_label">Tháng 7</label>
+                                <field name="target_jul"/>
+                            </div>
+                            <div>
+                                <label for="target_aug" class="o_form_label">Tháng 8</label>
+                                <field name="target_aug"/>
+                            </div>
+                            <div>
+                                <label for="target_sep" class="o_form_label">Tháng 9</label>
+                                <field name="target_sep"/>
+                            </div>
+                            <div>
+                                <label for="target_oct" class="o_form_label">Tháng 10</label>
+                                <field name="target_oct"/>
+                            </div>
+                            <div>
+                                <label for="target_nov" class="o_form_label">Tháng 11</label>
+                                <field name="target_nov"/>
+                            </div>
+                            <div>
+                                <label for="target_dec" class="o_form_label">Tháng 12</label>
+                                <field name="target_dec"/>
+                            </div>
+                        </group>
+                 
                     </page>
-
                 </xpath>
             </field>
-        </record>
+        </record> 
+
+        <record id="crm_team_inherit_view_tree" model="ir.ui.view">
+            <field name="name">crm.team.inherit.tree</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="total_target_amount"/>   
+                </xpath>
+            </field>
+        </record> 
     </data>
 </odoo>

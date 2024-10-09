@@ -1,22 +1,25 @@
-<odoo>
+<!-- <odoo>
     <data>
-        <record id="view_crm_team_form_inherit" model="ir.ui.view">
-            <field name="name">crm.team.form.inherit</field>
-            <field name="model">crm.team</field>
-            <field name="inherit_id" ref="crm.crm_team_view_form"/>
+        <record id="view_crm_team_target_form" model="ir.ui.view">
+            <field name="name">crm.team.target.form</field>
+            <field name="model">crm.team.target</field>
             <field name="arch" type="xml">
-                <xpath expr="//page[@name='members_users']" position="after">
-                    <page string="Chỉ tiêu doanh số theo tháng (trước VAT)" name="target_amount">
-                        <field name="target_ids" widget="one2many_list">
-                            <tree editable="bottom">
-                                <field name="member_ids"/>
-                                <field name="month"/>
-                                <field name="target_amount"/>
-                            </tree>
-                        </field>
-                    </page>
-                </xpath>
+                <form string="Chỉ tiêu doanh số">
+                    <group>
+                 
+                        <field name="team_id"/>
+                        <field name="target"/>
+                   
+                        <button name="action_open_target_modal" string="Xem Chi tiết" type="object" class="oe_highlight"/>
+                    </group>
+                </form>
             </field>
         </record>
+        <record id="action_crm_team_target" model="ir.actions.act_window">
+            <field name="name">Chỉ tiêu doanh số</field>
+            <field name="res_model">crm.team.target</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
     </data>
-</odoo>
+</odoo> -->

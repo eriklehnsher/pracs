@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="0">
+        <record id="module_category_custom" model="ir.module.category">
+            <field name="name">CRM</field>
+            <field name="sequence">1</field>
+        </record>
+
+        
+    </data>
+    
+</odoo>
