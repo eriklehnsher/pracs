@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="crm_lead_inherit_view_form" model="ir.ui.view">
+            <field name="name">crm.lead.inherit.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lost_reason_id']" position="before">
+                    
+                    <field name="min_revenue"  />
+                   
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
