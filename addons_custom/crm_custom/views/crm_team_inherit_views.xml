@@ -6,7 +6,7 @@
             <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='members_users']" position="before">
-                    <page string ="Chỉ tiêu doanh số theo tháng (trước VAT)" name="taget" groups="crm_team.group_crm_manager" >
+                    <page string ="Chỉ tiêu doanh số theo tháng (trước VAT)" name="taget" >
                         <group>
                             <div>
                                 <label for="target_jan" class="o_form_label">Tháng 1</label>
