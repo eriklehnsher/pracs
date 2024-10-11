@@ -11,6 +11,6 @@
         'views/plan_sale_order.xml',
         'views/sale_order_inherit.xml',
         'security/plan_sale_order_security.xml',
-        # 'security/ir.model.access.csv'
-    ],
+        'security/ir.model.access.csv'
+    ], 
 }
