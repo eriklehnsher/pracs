@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_crm_manager,Access CRM Lead Manager,sale_team.model_crm_team,crm_custom.group_sales_manager,1,1,1,1
-access_crm_manager,Access CRM Lead Manager,sale_team.model_crm_team,crm_custom.group_sales_team_leader,1,1,1,0
-access_crm_manager,Access CRM Lead Manager,sale_team.model_crm_team,crm_custom.group_sales_staffs,1,0,0,0
+access_crm_manager,access_crm_lead_staff,crm.model_crm_team,crm_custom.group_sales_stafff,1,0,0,0
+access_crm_manager,access_crm_lead_team_leader,crm.model_crm_team,crm_custom.group_sales_team_leaderr,1,1,1,0
+access_crm_manager,access_crm_lead_manager,crm.model_crm_team,crm_custom.group_sales_managerr,1,1,1,1

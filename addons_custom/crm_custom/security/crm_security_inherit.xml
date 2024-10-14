@@ -1,22 +1,21 @@
 <odoo>
 	<data noupdate="0">
-        <record id="group_sales_staffs" model="res.groups">
-            <field name="name">Sales Staff</field>
+        <record id="group_sales_stafff" model="res.groups">
+            <field name="name">Sales Stafff</field>
             <field name="category_id" ref="base.module_category_sales_sales" />
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
         </record>
 
-        <record id="group_sales_team_leader" model="res.groups">
-            <field name="name">Sales Staffs</field>
+        <record id="group_sales_team_leaderr" model="res.groups">
+            <field name="name">sales Leaderr</field>
             <field name="category_id" ref="base.module_category_sales_sales" />
-            <field name="implied_ids" eval="[(4, ref('group_sales_staffs'))]" />
+            <field name="implied_ids" eval="[(4, ref('group_sales_stafff'))]" />
         </record>
 
-        <record id="group_sales_manager" model="res.groups">
-            <field name="name">Sales Manager</field>
+        <record id="group_sales_managerr" model="res.groups">
+            <field name="name">Sales Managerr</field>
             <field name="category_id" ref="base.module_category_sales_sales" />
-            <field name="implied_ids" eval="[(4, ref('group_sales_team_leader'))]" />
-            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" />
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
     </data>
 

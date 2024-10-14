@@ -1528,7 +1528,6 @@ class Lead(models.Model):
     def _merge_dependences_attachments(self, opportunities):
         """ Move attachments of given opportunities to the current one `self`, and rename
             the attachments having same name than native ones.
-
         :param opportunities: see ``_merge_dependences``
         """
         self.ensure_one()
