@@ -28,21 +28,30 @@ class PlanSaleOrder(models.Model):
     approved_by_ids = fields.Many2many(
         'res.partner',
         'plan_sale_approved_by_rel',  # Tên bảng liên kết mới
-        'plan_id', 'partner_id', 
-         string='Đã duyệt', readonly=True)
+        'plan_id', 'partner_id',
+        string='Đã duyệt', readonly=True)
+    rejected_by_ids = fields.Many2many(
+        'res.partner',
+        'plan_sale_rejected_by_rel',  # Tên bảng liên kết mới
+        'plan_id', 'partner_id',
+        string='Đã từ chối', readonly=True)
+
     created_at = fields.Datetime(
         string="Ngày tạo", default=fields.Datetime.now)
     updated_at = fields.Datetime(
         string="Ngày cập nhật", default=fields.Datetime.now)
-    #creator_id bị trùng
+    # creator_id bị trùng
     creater_id = fields.Many2one(
         'res.users', string="Người tạo", readonly=True, default=lambda self: self.env.user.id
     )  # default to current user
 
     def action_approve(self):
         current_user = self.env.user.partner_id
+        # if current_user not in self.approver_ids:
+        #     raise UserError("Người phê duyệt không hợp lệ hoặc đã duyệt.")
         if current_user in self.approver_ids and current_user not in self.approved_by_ids:
             self.approved_by_ids = [(4, current_user.id)]
+            remaining_approvers = self.approver_ids - self.approved_by_ids
             self.message_post(
                 body=f"Người phê duyệt {current_user.name} đã phê duyệt kế hoạch.",
                 message_type="notification",
@@ -55,30 +64,48 @@ class PlanSaleOrder(models.Model):
                     message_type="notification",
                     partner_ids=[self.creater_id.partner_id.id]
                 )
+            else:
+                self.state = "pending"
+                remaining_names = ", ".join(
+                    [approver.name for approver in remaining_approvers])
+                self.message_post(
+                    body=f"Kế hoạch đã được phê duyệt bởi {current_user.name}. Đang chờ {remaining_names} .",
+                    message_type="notification",
+                    partner_ids=[self.creater_id.partner_id.id]
+                )
         else:
             raise UserError("Người phê duyệt không hợp lệ hoặc đã duyệt.")
-        return True
 
     def action_reject(self):
         current_user = self.env.user.partner_id
-        if current_user in self.approver_ids and current_user not in self.approved_by_ids:
+        
+        if current_user in self.approver_ids and current_user not in self.rejected_by_ids:
+            self.rejected_by_ids = [(4, current_user.id)]
+            remaining_rejectors = self.approver_ids - self.rejected_by_ids
             self.state = "rejected"
             self.message_post(
                 body=f"Người phê duyệt {current_user.name} đã từ chối kế hoạch.",
                 message_type="notification",
                 partner_ids=[current_user.id]
             )
-            if len(self.approved_by_ids) == len(self.approver_ids):
-                self.state = "approved"
+            if len(self.rejected_by_ids) == len(self.approver_ids):
+                self.state = "rejected"
                 self.message_post(
-                    body="Kế hoạch đã được tất cả người phê duyệt duyệt.",
+                    body="Kế hoạch đã được tất cả người phê duyệt từ chối.",
+                    message_type="notification",
+                    partner_ids=[self.creater_id.partner_id.id]
+                )
+            else:
+                self.state = "pending"
+                remaining_names = ", ".join(
+                    [rejector.name for rejector in remaining_rejectors])
+                self.message_post(
+                    body=f"Kế hoạch đã bị từ chối bởi {current_user.name}. Đang chờ {remaining_names} .",
                     message_type="notification",
                     partner_ids=[self.creater_id.partner_id.id]
                 )
         else:
-            raise UserError("Người phê duyệt không hợp lệ hoặc đã duyệt.")
-            
-        
+            raise UserError("Người phê duyệt không hợp lệ hoặc đã từ chối.")
 
     def action_sent_for_approval(self):
         if not self.approver_ids:

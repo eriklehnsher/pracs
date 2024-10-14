@@ -62,6 +62,16 @@
                 </xpath>
             </field>
         </record> 
+        <record id="crm_team_inherit_view_form" model="ir.ui.view">
+            <field name="name">crm.team.inherit.form</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='members_users']" position="before">
+                    
+                </xpath>
+            </field>
+        </record> 
         <record id="crm_team_inherit_view_tree" model="ir.ui.view">
             <field name="name">crm.team.inherit.tree</field>
             <field name="model">crm.team</field>
