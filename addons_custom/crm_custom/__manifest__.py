@@ -8,5 +8,7 @@
         # 'views/crm_team_target_modal_views.xml',
         'views/crm_team_inherit_views.xml',
         'views/crm_lead_inherit_views.xml',
+        'wizard/crm_lead_report_views.xml',
     ],
+  
 }

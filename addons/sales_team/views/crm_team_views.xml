@@ -75,8 +75,10 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                         </t>
                                     </templates>
+                                    
                                 </kanban>
                             </field>
                             <field name="crm_team_member_ids" mode="kanban"

@@ -31,17 +31,24 @@ class CrmTeam(models.Model):
     target_oct = fields.Float(string=' tháng 10', )  # tháng 10
     target_nov = fields.Float(string=' tháng 11', )  # tháng 11
     target_dec = fields.Float(string=' tháng 12', )  # tháng 12
-    total_target_amount = fields.Monetary(
-        string='Tổng mục tiêu', compute='_compute_total_target_amount', store=True, currency_field="currency_id")  # tổng mục tiêu
 
-    @api.depends('target_jan', 'target_feb', 'target_mar', 'target_apr', 'target_may', 'target_jun', 'target_jul', 'target_aug', 'target_sep', 'target_oct', 'target_nov', 'target_dec')
+    total_target_amount = fields.Monetary(
+        string='Tổng mục tiêu', 
+        compute='_compute_total_target_amount', 
+        store=True, currency_field="currency_id")  # tổng mục tiêu
+
+    @api.depends('target_jan', 'target_feb', 'target_mar', 'target_apr', 'target_may', 'target_jun', 
+                 'target_jul', 'target_aug', 'target_sep', 'target_oct', 'target_nov', 'target_dec')
     def _compute_total_target_amount(self):
         for record in self:
-            record.total_target_amount = record.target_jan + record.target_feb + record.target_mar + record.target_apr + record.target_may + \
+            record.total_target_amount = record.target_jan + record.target_feb 
+            + record.target_mar + record.target_apr + record.target_may + \
                 record.target_jun + record.target_jul + record.target_aug + \
                 record.target_sep + record.target_oct + record.target_nov + record.target_dec
 
-    @api.constrains('target_jan', 'target_feb', 'target_mar', 'target_apr', 'target_may', 'target_jun', 'target_jul', 'target_aug', 'target_sep', 'target_oct', 'target_nov', 'target_dec')
+    @api.constrains('target_jan', 'target_feb', 'target_mar', 'target_apr', 
+                    'target_may', 'target_jun', 'target_jul', 'target_aug', 
+                    'target_sep', 'target_oct', 'target_nov', 'target_dec')
     def _check_target(self):
 
         for record in self:
@@ -63,3 +70,16 @@ class CrmTeam(models.Model):
                 if target is None or target <= 0:
                     raise models.ValidationError(
                         'Mục tiêu không thể nhỏ hơn 0')
+
+
+
+    @api.model
+    def action_open_export_data(self):
+        self.ensure_one()
+        return {
+            'name': 'Export Data',
+            'type': 'ir.actions.act_window',
+            'res_model': 'crm.team.target',
+            'view_mode': 'tree',
+            'target': 'new',
+        }

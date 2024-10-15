@@ -693,7 +693,7 @@
                     <field name="campaign_id"/>
                     <field name="activity_state"/>
                     <field name="lead_properties"/>
-                    <separator />
+                    <separator /> 
                     <filter string="My Leads"
                             name="assigned_to_me"
                             domain="[('user_id', '=', uid)]"
@@ -1277,7 +1277,6 @@
             </field>
             <field name="search_view_id" ref="crm.crm_lead_view_search_forecast"/>
         </record>
-
         <record id="crm_lead_action_forecast_view_kanban" model="ir.actions.act_window.view">
             <field name="sequence" eval="0"/>
             <field name="view_mode">kanban</field>

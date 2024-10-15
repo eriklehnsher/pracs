@@ -102,7 +102,6 @@ class Lead(models.Model):
     _primary_email = 'email_from'
     _check_company_auto = True
     _track_duration_field = 'stage_id'
-
     # Description
     name = fields.Char(
         'Opportunity', index='trigram', required=True,
