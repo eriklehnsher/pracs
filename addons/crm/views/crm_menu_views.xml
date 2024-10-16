@@ -72,13 +72,6 @@
         sequence="1"/>
 
 
-        <menuitem 
-        id="export_data"
-        name="Export Data"
-        parent="crm_menu_report"
-        action="crm_custom.action_open_crm_lead_popup"
-        />
-
     <menuitem
         id="crm_opportunity_report_menu" 
         name="Pipeline"

@@ -1,15 +1,11 @@
 import csv
 import base64
 from io import StringIO as stringIO
-
-
 from odoo import models, fields, api
-
 from odoo.exceptions import UserError
 
 class CrmLead(models.Model):
-    _inherit =[ "crm.lead", "mail.activity.mixin", "mail.thread"]
-    _name = 'crm.lead'
+    _inherit = "crm.lead"
     
     min_revenue = fields.Float(string='Doanh thu tối thiểu(trước VAT)',default="", readonly=False, required=True)
     create_month = fields.Selection([
