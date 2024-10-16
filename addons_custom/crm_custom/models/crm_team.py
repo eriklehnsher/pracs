@@ -3,21 +3,12 @@ from odoo.api import depends
 
 
 class CrmTeam(models.Model):
-    _inherit = ["crm.team", "mail.activity.mixin", "mail.thread"]
+    _inherit = "crm.team"
     _name = 'crm.team'
     favorite_user_ids = fields.Many2many(
         'res.users', 'sale_team_favorite_user_rel', 'team_id', 'user_id', string='Favorite Users')
-    # target_id = fields.One2many(
-    #     'crm.team.target', 'team_id', string='Mục tiêu nhóm')  # mục tiêu nhóm
 
-    # @api.depends('target_id')
-    # def _compute_total_target(self):
-    #     for team in self:
-    #         team.total_target = sum(
-    #             target.target_amount for target in team.target_id)
 
-    # total_target = fields.Float(
-    #     string='Tổng mục tiêu', compute='_compute_total_target', store=True)  # tổng mục tiêu
 
     target_jan = fields.Float(string=' tháng 1', )  # tháng 1
     target_feb = fields.Float(string=' tháng 2', )  # tháng 2
@@ -41,10 +32,10 @@ class CrmTeam(models.Model):
                  'target_jul', 'target_aug', 'target_sep', 'target_oct', 'target_nov', 'target_dec')
     def _compute_total_target_amount(self):
         for record in self:
-            record.total_target_amount = record.target_jan + record.target_feb 
-            + record.target_mar + record.target_apr + record.target_may + \
-                record.target_jun + record.target_jul + record.target_aug + \
-                record.target_sep + record.target_oct + record.target_nov + record.target_dec
+            record.total_target_amount = record.target_jan + record.target_feb
+            var = + record.target_mar + record.target_apr + record.target_may + \
+                  record.target_jun + record.target_jul + record.target_aug + \
+                  record.target_sep + record.target_oct + record.target_nov + record.target_dec
 
     @api.constrains('target_jan', 'target_feb', 'target_mar', 'target_apr', 
                     'target_may', 'target_jun', 'target_jul', 'target_aug', 

@@ -7,25 +7,37 @@
                 <form string="Lead Popup">
                     <sheet>
                         <group>
-                            <field name="name"/>
-                            <field name="min_revenue"/>
+                            <field name="company_id"/>
                             <field name="team_id"/>
                             <field name="create_date"/>
-                            <field name="user_id"/>
-                            <field name="company_id"/>
+                            <field name='create_month'/>
                         </group>
                         <footer>
-                            <button name="action_export_crm_lead_data" string="Open" type="object" class="oe_highlight"/>
-                            <button string="Cancel" class="oe_link" special="cancel"/>
+                            <button name="action_export_crm_lead_data" string="xuat du lieu" type="object" class="oe_highlight"/>
+                            <button string="huy" class="oe_link" special="cancel"/>
                         </footer>
                     </sheet>
                 </form>
             </field>
         </record>
+        <record id = 'crm_lead_popup_tree_view' model='ir.ui.view'>
+            <field name='name'>crm.lead.tree</field>
+            <field name='model'>crm.lead</field>
+            <field name='arch' type='xml'>
+                <tree string="Lead Popup">
+                    <field name="name"/>
+                    <field name="min_revenue"/>
+                    <field name="team_id"/>
+                    <field name="create_date"/>
+                    <field name="user_id"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
         <record id='action_open_crm_lead_popup' model='ir.actions.act_window'>
             <field name='name'>Lead Popup</field>
             <field name='res_model'>crm.lead</field>
-            <field name='view_mode'>form</field>
+            <field name='view_mode'>form,tree</field>
             <field name='target'>new</field>
             <field name='view_id' ref='crm_lead_popup_form'/>
         </record>
