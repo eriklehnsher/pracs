@@ -72,14 +72,3 @@ class CrmTeam(models.Model):
                         'Mục tiêu không thể nhỏ hơn 0')
 
 
-
-    @api.model
-    def action_open_export_data(self):
-        self.ensure_one()
-        return {
-            'name': 'Export Data',
-            'type': 'ir.actions.act_window',
-            'res_model': 'crm.team.target',
-            'view_mode': 'tree',
-            'target': 'new',
-        }

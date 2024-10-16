@@ -1,3 +1,8 @@
+import csv
+import base64
+from io import StringIO as stringIO
+
+
 from odoo import models, fields, api
 
 from odoo.exceptions import UserError
@@ -51,3 +56,41 @@ class CrmLead(models.Model):
     #         self.write(additional_values)
     #     return res
     
+    @api.model
+    def action_open_crm_lead_popup(self):
+        self.ensure_one()
+        return {
+            'name': 'Popup',
+            'type': 'ir.actions.act_window',
+            'res_model': 'crm.lead',
+            'view_mode': 'tree',
+            'target': 'new',
+            
+        }
+        
+    def action_export_crm_lead_data(self):
+        output = stringIO()
+        writer = csv.writer(output, quoting=csv.QUOTE_MINIMAL)
+        field_names = ['name', 'min_revenue', 'create_month','team_id','user_id']
+        writer.writerow(field_names)
+        
+        for lead in self:
+            writer.writerow([getattr(lead, field_name) for field_name in field_names])
+            
+        csv_data = base64.b64encode(output.getvalue().encode())
+        output.close()
+        
+        attachment = self.env['ir.attachment'].create({
+            'name': 'crm_lead.csv',
+            'type': 'binary',
+            'datas': csv_data,
+            'datas_fname': 'crm_lead.csv',
+            'res_model': 'crm.lead',
+            'res_id': self.id,
+            'mine_type': 'text/csv'
+        })
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'self'
+        }

@@ -1,0 +1,15 @@
+/* custom_popup.css */
+.custom-popup {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.custom-popup .o_list_view {
+    background-color: #f9f9f9;
+}
+
+.custom-popup .oe_button {
+    background-color: #007bff;
+    color: white;
+}

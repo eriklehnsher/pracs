@@ -1,0 +1,8 @@
+<odoo>
+    <template id="assets_backend" name="crm_custom assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/crm_custom/static/src/css/custom_popup.css"/>
+            <script src="/crm_custom/static/src/js/custom_popup.js"></script>
+        </xpath>
+    </template>
+</odoo>
