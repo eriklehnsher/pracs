@@ -10,7 +10,7 @@
                             <field name="company_id"/>
                             <field name="team_id"/>
                             <field name="create_date"/>
-                            <field name='create_month'/>
+                            <field name='create_month' />
                         </group>
                         <footer>
                             <button name="action_export_crm_lead_data" string="xuat du lieu" type="object" class="oe_highlight"/>

@@ -18,9 +18,9 @@ class PlanSaleOrder(models.Model):
     )  # thông tin kế hoạch
     state = fields.Selection(
         [("draft", "Nháp"),
-            ('pending', 'Chờ xác nhận'),
-            ("approved", "Duyệt "),
-            ("rejected", "Từ chối"),
+         ('pending', 'Chờ xác nhận'),
+         ("approved", "Duyệt "),
+         ("rejected", "Từ chối"),
          ],
         string="Trạng thái",
         default="draft",
@@ -78,7 +78,7 @@ class PlanSaleOrder(models.Model):
 
     def action_reject(self):
         current_user = self.env.user.partner_id
-        
+
         if current_user in self.approver_ids and current_user not in self.rejected_by_ids:
             self.rejected_by_ids = [(4, current_user.id)]
             remaining_rejectors = self.approver_ids - self.rejected_by_ids

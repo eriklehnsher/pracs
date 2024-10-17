@@ -1,0 +1,55 @@
+<odoo>
+    <record id="view_purchase_limit_config_form" model="ir.ui.view">
+        <field name="name">purchase.limit.config.form</field>
+        <field name="model">purchase.limit.config</field>
+        <field name="arch" type="xml">
+            <form string="Cấu hình hạn mức mua hàng">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group string="Danh sách nhân viên và hạn mức">
+                        <field name="limit_lines" widget="many2many_tags">
+                            <tree string="Hạn mức nhân viên">
+                                <field name="employees_id" string="Nhân viên"/>
+                                <field name="limit_amount" string="Hạn mức mua hàng"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_purchase_limit_employee_tree" model="ir.ui.view">
+        <field name="name">purchase.limit.employee.tree</field>
+        <field name="model">purchase.limit.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Hạn mức nhân viên">
+                <field name="employees_id" string="Nhân viên"/>
+                <field name="limit_amount" string="Hạn mức mua hàng"/>
+            </tree>
+        </field>
+    </record>
+    <odoo>
+    <!-- Action mở form cấu hình hạn mức -->
+    <record id="action_purchase_limit_config" model="ir.actions.act_window">
+        <field name="name">Cấu hình hạn mức mua hàng</field>
+        <field name="res_model">purchase.limit.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Nhấp để tạo mới cấu hình hạn mức mua hàng cho nhân viên mua hàng.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu chính cho cấu hình hạn mức mua hàng -->
+    <menuitem id="menu_purchase_limit_config_main"
+              name="Cấu hình hạn mức mua hàng"
+              parent="purchase.menu_purchase_root"
+              sequence="10"
+              action="action_purchase_limit_config"/>
+</odoo>
+
+</odoo>
