@@ -19,7 +19,6 @@
                 <xpath expr="//field[@name='lost_reason_id']" position="before">
                     <field name="min_revenue" />
                 </xpath>
-
             </field>
         </record>
         <record id="crm_lead_inherit_view_tree" model="ir.ui.view">

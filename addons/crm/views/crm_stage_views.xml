@@ -63,7 +63,8 @@
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
             Set a new stage in your opportunity pipeline
-          </p><p>
+          </p>
+            <p>
             Stages allow salespersons to easily track how a specific opportunity
             is positioned in the sales cycle.
           </p>
