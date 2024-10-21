@@ -1,10 +1,9 @@
-from odoo   import models, fields, api
+from odoo import models, fields, api
 
 
 class PurchaseLimitEmployee(models.Model):
     _name = 'purchase.limit.employee'
     _description = 'Purchase Limit Employee'
-
 
     employees_id = fields.Many2one('res.users', string='Nhân Viên', required=True)
     limit_amount = fields.Float(string='Limit Amount', required=True)

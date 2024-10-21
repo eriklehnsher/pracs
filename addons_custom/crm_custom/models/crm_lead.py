@@ -3,36 +3,37 @@ import base64
 from io import StringIO as stringIO
 from odoo import models, fields, api
 from odoo.exceptions import UserError
+import calendar
+from datetime import datetime
 
+import logging
 
 class CrmLead(models.Model):
     _inherit = "crm.lead"
-
     min_revenue = fields.Float(string='Doanh thu tối thiểu(trước VAT)', default="", readonly=False, required=True)
+    create_month = fields.Selection(
+        selection=lambda self: [(str(i), datetime.strptime(str(i), '%m').strftime('%B')) for i in range(1, 13)],
+        string='Tháng tạo',
+        required=True,
+        default=lambda self: str(datetime.now().month),
+    )  
 
-    create_month = fields.Selection([
-        ('01', 'Tháng 1'),
-        ('02', 'Tháng 2'),
-        ('03', 'Tháng 3'),
-        ('04', 'Tháng 4'),
-        ('05', 'Tháng 5'),
-        ('06', 'Tháng 6'),
-        ('07', 'Tháng 7'),
-        ('08', 'Tháng 8'),
-        ('09', 'Tháng 9'),
-        ('10', 'Tháng 10'),
-        ('11', 'Tháng 11'),
-        ('12', 'Tháng 12'),
-    ], string='Tháng tạo', compute='_compute_create_month',
-        default=lambda self: str(fields.Date.context_today(self).month).zfill(2))
 
-    @api.depends('create_date')
-    def _compute_create_month(self):
-        for lead in self:
-            if lead.create_date:
-                lead.create_month = str(lead.create_date.month).zfill(2)  # Đảm bảo định dạng hai chữ số
-            else:
-                lead.create_month = str(fields.Date.context_today(self).month).zfill(2)  # Tháng hiện tại
+    @api.model
+    def create(self, vals):
+        if 'create_date' in vals:
+            create_date = fields.Datetime.from_string(vals['create_date'])
+            vals['create_month'] = str(create_date.month)  # Thiết lập tháng tạo từ create_date
+        else:
+            vals['create_month'] = str(datetime.now().month)  # Tháng hiện tại nếu không có create_date
+        return super(CrmLead, self).create(vals)
+
+    def update_create_month_for_existing_leads(self):
+        leads = self.search([('create_month', '=', False)])  # Tìm kiếm các cơ hội chưa có giá trị create_month
+        for lead in leads:
+            lead.create_month = str(lead.create_date.month)  # Cập nhật create_month dựa trên create_date
+
+
 
     @api.constrains('min_revenue')
     def _check_min_revenue(self):
@@ -56,65 +57,50 @@ class CrmLead(models.Model):
             'target': 'new',
         }
 
-    def action_export_crm_lead_data(self):
-        output = stringIO()
-        writer = csv.writer(output, quoting=csv.QUOTE_MINIMAL)
-        field_names = ['name', 'min_revenue', 'create_month', 'team_id', 'user_id']
-        writer.writerow(field_names)
+    def action_export_crm_lead_data(self, selected_month):
+        _logger = logging.getLogger(__name__)
+        """Hàm xuất dữ liệu CRM Lead dựa theo tháng cụ thể"""
+        _logger.info('Xuất dữ liệu CRM Leads cho tháng: %s', selected_month)
 
-        for lead in self:
-            writer.writerow([getattr(lead, field_name) for field_name in field_names])
+        # Lọc các cơ hội theo tháng tạo
+        leads = self.search([('create_month', '=', selected_month)])
 
-        csv_data = base64.b64encode(output.getvalue().encode())
-        output.close()
+        if not leads:
+            raise UserError(f"Không tìm thấy cơ hội nào trong tháng {selected_month}.")
 
-        attachment = self.env['ir.attachment'].create({
-            'name': 'crm_lead.csv',
-            'type': 'binary',
-            'datas': csv_data,
-            'datas_fname': 'crm_lead.csv',
-            'res_model': 'crm.lead',
-            'res_id': self.id,
-            'mime_type': 'text/csv'  # Đúng là mime_type, không phải mine_type
-        })
+        _logger.debug('%d cơ hội trong tháng %s', len(leads), selected_month)
+
+
+        csv_content = "ID,name, Revenue,Team,User,Company,Create Date\n"
+        for lead in leads:
+            csv_content += "{},{},{},{},{},{},{}\n".format(
+                lead.id,
+                lead.name,
+                lead.min_revenue or 0.0,
+                lead.team_id or "",
+                lead.user_id or "",
+                lead.company_id or "",
+                lead.create_date.strftime("%Y-%m-%d"),
+            )
+
+
+        attachment_name = f'crm_leads_export_{selected_month}.csv'
+        try:
+            attachment = self.env['ir.attachment'].create({
+                'name': attachment_name,
+                'datas': base64.b64encode(csv_content.encode('utf-8')),
+                'type': 'binary',
+                'res_model': 'crm.lead',
+                'res_id': self.id,
+            })
+
+        except IOError:
+            _logger.exception('Lỗi khi ghi dữ liệu vào file CSV cho tháng %s', selected_month)
+            raise UserError(f'Không thể lưu file cho tháng {selected_month}.')
+
+        # Trả về thông báo tải file xuống
         return {
             'type': 'ir.actions.act_url',
-            'url': f'/web/content/{attachment.id}?download=true',
-            'target': 'self'
+            'url': '/web/content/{}/{}'.format(attachment.id, attachment_name),
+            'target': 'self',
         }
-
-
-
-    @api.depends('target_jan', 'target_feb', 'target_mar', 'target_apr', 'target_may', 'target_jun',
-                 'target_jul', 'target_aug', 'target_sep', 'target_oct', 'target_nov', 'target_dec')
-    def _compute_total_target_amount(self):
-        for record in self:
-            record.total_target_amount = record.target_jan + record.target_feb
-            var = + record.target_mar + record.target_apr + record.target_may + \
-                  record.target_jun + record.target_jul + record.target_aug + \
-                  record.target_sep + record.target_oct + record.target_nov + record.target_dec
-
-    @api.constrains('target_jan', 'target_feb', 'target_mar', 'target_apr',
-                    'target_may', 'target_jun', 'target_jul', 'target_aug',
-                    'target_sep', 'target_oct', 'target_nov', 'target_dec')
-    def _check_target(self):
-
-        for record in self:
-            targets = [
-                record.target_jan,
-                record.target_feb,
-                record.target_mar,
-                record.target_apr,
-                record.target_may,
-                record.target_jun,
-                record.target_jul,
-                record.target_aug,
-                record.target_sep,
-                record.target_oct,
-                record.target_nov,
-                record.target_dec
-            ]
-            for target in targets:
-                if target is None or target <= 0:
-                    raise models.ValidationError(
-                        'Mục tiêu không thể nhỏ hơn 0')

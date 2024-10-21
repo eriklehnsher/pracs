@@ -7,30 +7,35 @@
                 <form string="Lead Popup">
                     <sheet>
                         <group>
-                            <field name="company_id"/>
+
+                            <field name="company_id" invisible="1"/>
                             <field name="team_id"/>
-                            <field name="create_date"/>
-                            <field name='create_month' />
+                            <field name='create_month'/>
                         </group>
-                        <footer>
-                            <button name="action_export_crm_lead_data" string="xuat du lieu" type="object" class="oe_highlight"/>
-                            <button string="huy" class="oe_link" special="cancel"/>
-                        </footer>
+<!--                <footer>-->
+<!--                    <button name="action_export_crm_lead_data" string="Xuất dữ liệu" type="object" class="oe_highlight"/>-->
+<!--                    <button string="Hủy" class="oe_link" special="cancel"/>-->
+<!--                </footer>-->
                     </sheet>
                 </form>
             </field>
         </record>
-        <record id = 'crm_lead_popup_tree_view' model='ir.ui.view'>
-            <field name='name'>crm.lead.tree</field>
-            <field name='model'>crm.lead</field>
-            <field name='arch' type='xml'>
+        <record id="crm_lead_popup_tree" model="ir.ui.view">
+            <field name="name">crm.lead.tree.opportunity</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
                 <tree string="Lead Popup">
+                       <header>
+                        <button name="action_export_crm_lead_data" string="Xuất dữ liệu" type="object" class="oe_highlight" context="{'selected_month': create_month}"/>
+                        <button string="Hủy" class="oe_link" special="cancel"/>
+                    </header>
                     <field name="name"/>
-                    <field name="min_revenue"/>
-                    <field name="team_id"/>
-                    <field name="create_date"/>
+                    <field name="company_id" invisible="1"/>
                     <field name="user_id"/>
-                    <field name="company_id"/>
+                    <field name="team_id"/>
+                    <field name='create_month'/>
+                    <field name="min_revenue"/>
+
                 </tree>
             </field>
         </record>
@@ -39,7 +44,8 @@
             <field name='res_model'>crm.lead</field>
             <field name='view_mode'>form,tree</field>
             <field name='target'>new</field>
-            <field name='view_id' ref='crm_lead_popup_form'/>
+<!--            <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'form', 'view_id': ref('crm_lead_popup_form')})]"/>-->
+             <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('crm_lead_popup_tree')})]"/>
         </record>
 
         <menuitem
