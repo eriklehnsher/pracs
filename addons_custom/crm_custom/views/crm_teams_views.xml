@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="crm_team_view_tree" model="ir.ui.view">
+            <field name="name">crm.teams.tree</field>
+            <field name="model">crm.teams</field>
+            <field name="arch" type="xml">
+                <tree string="CRM Teams">
+                    <field name="name"/>
+                    <field name="teams_id"/>
+                    <field name="target_jan" invisible="context.get('selected_month') != '1'"/>
+                    <field name="target_feb" invisible="context.get('selected_month') != '2'"/>
+                    <field name="target_mar" invisible="context.get('selected_month') != '3'"/>
+                    <field name="target_apr" invisible="context.get('selected_month') != '4'"/>
+                    <field name="target_may" invisible="context.get('selected_month') != '5'"/>
+                    <field name="target_jun" invisible="context.get('selected_month') != '6'"/>
+                    <field name="target_jul" invisible="context.get('selected_month') != '7'"/>
+                    <field name="target_aug" invisible="context.get('selected_month') != '8'"/>
+                    <field name="target_sep" invisible="context.get('selected_month') != '9'"/>
+                    <field name="target_oct" invisible="context.get('selected_month') != '10'"/>
+                    <field name="target_nov" invisible="context.get('selected_month') != '11'"/>
+                    <field name="target_dec" invisible="context.get('selected_month') != '12'"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
