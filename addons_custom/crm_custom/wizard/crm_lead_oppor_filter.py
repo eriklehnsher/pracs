@@ -9,7 +9,7 @@ class CrmLeadOpporFilter(models.TransientModel):
 
     month = fields.Selection([
         (str(i), f"tháng {i}") for i in range(1, 13)
-    ], string="Month", required=True)
+    ], string="Tháng", required=True)
 
     def action_filter_oppor(self):
         selected_month = int(self.month)
