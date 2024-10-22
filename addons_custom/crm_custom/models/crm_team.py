@@ -7,9 +7,6 @@ class CrmTeam(models.Model):
     _name = 'crm.team'
     favorite_user_ids = fields.Many2many(
         'res.users', 'sale_team_favorite_user_rel', 'team_id', 'user_id', string='Favorite Users')
-
-
-
     target_jan = fields.Float(string=' tháng 1', )  # tháng 1
     target_feb = fields.Float(string=' tháng 2', )  # tháng 2
     target_mar = fields.Float(string=' tháng 3', )  # tháng 3
