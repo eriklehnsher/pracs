@@ -7,6 +7,7 @@
                 <form string="Danh sách kế hoạch theo tháng tạo">
                     <group>
                         <field name="month"/>
+                        <field name="year"/>
                     </group>
                     <footer>
                         <button name="action_filter_oppor" string="Xuất Dữ Liệu" type="object" class="btn-primary"/>
