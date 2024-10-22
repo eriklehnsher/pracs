@@ -1,5 +1,6 @@
+from datetime import datetime
 from odoo import models, fields, api
-
+from dateutil.relativedelta import relativedelta
 
 class   CrmTeamList(models.TransientModel):
     _name = 'crm.team.list'
@@ -24,12 +25,13 @@ class   CrmTeamList(models.TransientModel):
     def action_open_custom_lead_tree(self):
         selected_team = self.team_id.id if self.team_id else False
         selected_month = self.create_month
-        start_date = datetime( selected_month, 1)
-
-        teams = self.env['crm.team.for.only'].search([
-            ('create_date')
-
-
+        current_year = datetime.now().year
+        start_date = datetime(current_year, selected_month, 1)
+        end_date = start_date + relativedelta(months=1, days=-1)
+        domains = [('create_date', '>=', start_date), ('create_date', '<=', end_date)]
+        if selected_team:
+            domains.append(('team_id', '=', selected_team))
+        leads = self.env['crm.team.for.only'].search(domains)
 
         return {
             'name': 'Lead List',
@@ -37,6 +39,6 @@ class   CrmTeamList(models.TransientModel):
             'res_model': 'crm.lead',
             'view_mode': 'tree',
             'views': [(self.env.ref('crm_custom.crm_lead_team_list_views').id, 'tree')],
-
+            'domain': [('id', 'in', leads.ids)],
             'target': 'current',
         }
