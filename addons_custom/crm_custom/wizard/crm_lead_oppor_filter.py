@@ -22,9 +22,7 @@ class CrmLeadOpporFilter(models.TransientModel):
         oppors = self.env['crm.lead'].search([
             ('create_date', '>=', start_date),
             ('create_date', '<=', end_date),
-
         ])
-
         return {
             'name': 'Opportunities from Leads',
             'type': 'ir.actions.act_window',

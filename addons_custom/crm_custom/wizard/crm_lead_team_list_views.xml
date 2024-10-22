@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="crm_lead_team_list_views" model="ir.ui.view">
+            <field name="name">crm.lead.team.list</field>
+            <field name="model">crm.team.for.only</field>
+            <field name="arch" type="html">
+                <tree string="Team List">
+                    <field name="team_id"/>
+                    <field name="company_id"/>
+                    <field name="sale_amount_total" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

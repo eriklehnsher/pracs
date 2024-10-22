@@ -10,8 +10,7 @@
                     <field name="team_id"/>
                     <field name="user_id"/>
                     <field name="company_id"/>
-                    <field name="sale_amount_total" widget="monetary" options="{'currency_field': 'company_currency'}"
-                           field_id="sale_amount_total_0"/>
+                    <field name="sale_amount_total" widget="monetary" options="{'currency_field': 'company_currency'}"/>
                     <field name="min_revenue"/>
                 </tree>
             </field>
