@@ -6,7 +6,7 @@
             <field name="arch" type="xml">
                 <form string="CRM Team Filter">
                     <group>
-                        <field name="teams_id"/>
+                        <field name="team_id"/>
                         <field name="month"/>
                     </group>
                     <footer>

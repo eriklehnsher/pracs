@@ -5,8 +5,7 @@
             <field name="model">crm.teams</field>
             <field name="arch" type="xml">
                 <tree string="CRM Teams">
-                    <field name="name"/>
-                    <field name="teams_id"/>
+                    <field name="team_id" string="nhóm bán hàng"/>
                     <field name="target_jan" invisible="context.get('selected_month') != '1'"/>
                     <field name="target_feb" invisible="context.get('selected_month') != '2'"/>
                     <field name="target_mar" invisible="context.get('selected_month') != '3'"/>
@@ -22,5 +21,13 @@
                 </tree>
             </field>
         </record>
+        <record id="action_crm_team_all" model="ir.actions.act_window">
+            <field name="name">CRM Team Filter</field>
+            <field name="res_model">crm.teams</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_team_view_tree"/>
+            <field name="target">new</field>
+        </record>
+        <menuitem id="menu_crm_team_filter_all_list" name="CRM Team all" parent="crm.crm_menu_report" action="action_crm_team_all"/>
     </data>
 </odoo>
