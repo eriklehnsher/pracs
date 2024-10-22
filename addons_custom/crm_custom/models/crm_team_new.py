@@ -2,8 +2,8 @@ from odoo import models, fields, api
 
 
 
-class CrmTeams(models.Model):
-    _name = 'crm.teams'
+class CrmTeamNew(models.Model):
+    _name = 'crm.team.new'
     _description = 'CRM Teams'
 
     team_id = fields.Many2one('crm.team',  string='Teams')

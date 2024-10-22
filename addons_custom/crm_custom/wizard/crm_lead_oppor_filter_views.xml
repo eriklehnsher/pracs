@@ -17,14 +17,14 @@
             </field>
         </record>
         <record id="action_crm_lead_oppor_filter" model="ir.actions.act_window">
-            <field name="name">Tháng</field>
+            <field name="name">Báo cáo chi tiết</field>
             <field name="res_model">crm.lead.oppor.filter</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
         <menuitem
                 id="menu_crm_lead_oppor_filter"
-                name="Danh sách kế hoạch theo tháng tạo"
+                name="Báo cáo chi tiết"
                 parent="crm.crm_menu_report"
                 action="crm_custom.action_crm_lead_oppor_filter"/>
     </data>

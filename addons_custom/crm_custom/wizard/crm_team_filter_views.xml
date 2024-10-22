@@ -17,11 +17,11 @@
             </field>
         </record>
         <record id="action_crm_team_filter" model="ir.actions.act_window">
-            <field name="name">CRM Team Filter</field>
+            <field name="name">Báo Cáo Đánh Giá Chỉ Tiêu</field>
             <field name="res_model">crm.team.filter</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-        <menuitem id="menu_crm_team_filter" name="CRM Team Filter" parent="crm.crm_menu_report" action="action_crm_team_filter"/>
+        <menuitem id="menu_crm_team_filter" name="Báo Cáo Đánh Giá Chỉ Tiêu" parent="crm.crm_menu_report" action="action_crm_team_filter"/>
     </data>
 </odoo>

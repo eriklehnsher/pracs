@@ -1,3 +1,5 @@
+from email.policy import default
+
 from odoo import models, fields, api
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -6,10 +8,12 @@ from dateutil.relativedelta import relativedelta
 class CrmTeamFilter(models.Model):
     _name = 'crm.team.filter'
     _description = 'CRM Team Filter'
-    team_id = fields.Many2one('crm.team',  string='Teams')
+
+    team_id = fields.Many2many('crm.team',  string='Chọn Nhóm')
     month = fields.Selection([
         (str(i), f"Tháng{i}") for i in range(1, 13)
-    ], string='thán', required=True)
+    ], string='Chọn Tháng', required=True, default=str(datetime.now().month))
+
     def action_apply_filter(self):
         selected_month = int(self.month) if self.month else False
         current_year = datetime.now().year
@@ -24,15 +28,15 @@ class CrmTeamFilter(models.Model):
         if end_date:
             domain.append(('create_date', '<=', end_date))
         if self.team_id:
-            domain.append(('team_id', '=', self.team_id.id))
-        teams = self.env['crm.teams'].search(domain)
+            domain.append(('team_id', 'in', self.team_id.ids))
+        leads = self.env['crm.lead'].search(domain)
 
         return {
             'name': 'CRM Teams',
             'type': 'ir.actions.act_window',
             'view_mode': 'tree',
-            'res_model': 'crm.teams',
+            'res_model': 'crm.team.new',
             'views': [(self.env.ref('crm_custom.crm_team_view_tree').id, 'tree')],
-            'domain': [('id', 'in', teams.ids)],
-            'context': {'default_team_id': self.team_id.id, 'selected_month': selected_month},
+            'domain': [('id', 'in', leads.ids)],
+            'context': {'selected_month': selected_month},
         }
