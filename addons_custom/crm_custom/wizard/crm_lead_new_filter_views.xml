@@ -6,8 +6,8 @@
             <field name="arch" type="xml">
                 <form string="CRM lead Filter">
                     <group>
-                        <field name="team_id"/>
-                        <field name="month"/>
+                        <field name="team_ids" widget="many2many_tags"/>
+                        <field name="month" required="1"/>
                     </group>
                     <footer>
                         <button name="action_apply_filter" string="Xuất Dữ Liệu" type="object" class="btn-primary"/>
@@ -18,7 +18,7 @@
         </record>
         <record id="action_crm_lead_new_filter" model="ir.actions.act_window">
             <field name="name">Báo Cáo Đánh Giá Chỉ Tiêu</field>
-            <field name="res_model">crm.team.filter</field>
+            <field name="res_model">crm.lead.new.filter</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>

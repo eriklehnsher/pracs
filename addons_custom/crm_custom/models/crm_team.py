@@ -55,7 +55,7 @@ class CrmTeam(models.Model):
                 record.target_dec
             ]
             for target in targets:
-                if target is None or target <= 0:
+                if target is None or target < 0:
                     raise models.ValidationError(
                         'Mục tiêu không thể nhỏ hơn 0')
 

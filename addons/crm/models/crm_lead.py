@@ -24,7 +24,6 @@ from . import crm_stage
 
 _logger = logging.getLogger(__name__)
 
-
 CRM_LEAD_FIELDS_TO_MERGE = [
     # UTM mixin
     'campaign_id',

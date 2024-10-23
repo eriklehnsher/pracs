@@ -1,34 +1,16 @@
 <odoo>
     <data>
-        <record id="crm_team_view_tree" model="ir.ui.view">
-            <field name="name">crm.lead.new.tree</field>
+        <record id="view_crm_lead_new_to_tree" model="ir.ui.view">
+            <field name="name">crm.lead.new</field>
             <field name="model">crm.lead.new</field>
             <field name="arch" type="xml">
-                <tree string="CRM Teams">
-                    <field name="team_id" string="nhóm bán hàng"/>
-                    <field name="target_jan" invisible="context.get('selected_month') != '1'"/>
-                    <field name="target_feb" invisible="context.get('selected_month') != '2'"/>
-                    <field name="target_mar" invisible="context.get('selected_month') != '3'"/>
-                    <field name="target_apr" invisible="context.get('selected_month') != '4'"/>
-                    <field name="target_may" invisible="context.get('selected_month') != '5'"/>
-                    <field name="target_jun" invisible="context.get('selected_month') != '6'"/>
-                    <field name="target_jul" invisible="context.get('selected_month') != '7'"/>
-                    <field name="target_aug" invisible="context.get('selected_month') != '8'"/>
-                    <field name="target_sep" invisible="context.get('selected_month') != '9'"/>
-                    <field name="target_oct" invisible="context.get('selected_month') != '10'"/>
-                    <field name="target_nov" invisible="context.get('selected_month') != '11'"/>
-                    <field name="target_dec" invisible="context.get('selected_month') != '12'"/>
-                    <field name="min_revenue" string="doanh thu tối thiểu"/>
+                <tree edit="0" create="0" delete="0">
+                    <field name="team_id"/>
+                    <field name="lead_id"/>
+                    <field name="sale_amount_total"/>
+                    <field name="target"/>
                 </tree>
             </field>
         </record>
-        <record id="action_crm_team_new_tree" model="ir.actions.act_window">
-            <field name="name">CRM Team New</field>
-            <field name="res_model">crm.team.new</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="crm_team_view_tree"/>
-            <field name="target">current</field>
-        </record>
-        <menuitem id="menu_crm_team_new" name="CRM LEAD New" parent="crm.crm_menu_report" action="action_crm_team_new_tree"/>
     </data>
 </odoo>
