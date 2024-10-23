@@ -21,26 +21,14 @@ class CrmTeamNew(models.Model):
     target_oct = fields.Float(related='team_id.target_oct',string='October Target', required=True)
     target_nov = fields.Float(related='team_id.target_nov',string='November Target', required=True)
     target_dec = fields.Float(related='team_id.target_dec',string='December Target', required=True)
+    min_revenue = fields.Float(related='team_id.sale_team_id.min_revenue', string='Minimum Revenue', readonly=True)
 
     @api.model
-    def create_new_crm_team(self):
-        new_crm_team_new = self.env['crm.team.new'].create({
-            'team_id': self.team_id.ids,
-            'name': self.name,
-            'create_date': self.create_date,
-            'target_jan': self.target_jan,
-            'target_feb': self.target_feb,
-            'target_mar': self.target_mar,
-            'target_apr': self.target_apr,
-            'target_may': self.target_may,
-            'target_jun': self.target_jun,
-            'target_jul': self.target_jul,
-            'target_aug': self.target_aug,
-            'target_sep': self.target_sep,
-            'target_oct': self.target_oct,
-            'target_nov': self.target_nov,
-            'target_dec': self.target_dec,
-        })
-        return new_crm_team_new
+    def create(self, vals):
+        team_id = vals.get('team_id')
+        if team_id:
+            team_id = self.env['crm.team'].browse(team_id)
+            
+        
 
 
