@@ -5,13 +5,12 @@
             <field name="model">crm.lead</field>
             <field name="arch" type="html">
                 <tree string="Opportunity">
-                    <field name="name"/>
-                    <field name="create_date"/>
-                    <field name="team_id"/>
-                    <field name="user_id"/>
-                    <field name="company_id"/>
-                    <field name="sale_amount_total" widget="monetary" options="{'currency_field': 'company_currency'}"/>
-                    <field name="min_revenue"/>
+                    <field name="name" string="Cơ Hội"/>
+                    <field name="create_date" string="ngày tạo"/>
+                    <field name="user_id" string="Nhân viên kinh doanh"/>
+                    <field name="team_id" string="Nhóm Bán Hàng"/>
+                    <field name="min_revenue" string="Doanh thu tối thiểu"/>
+                     <field name="sale_amount_total" widget="monetary" options="{'currency_field': 'company_currency'}" string="Doanh thu thực tế"/>
                 </tree>
             </field>
         </record>
