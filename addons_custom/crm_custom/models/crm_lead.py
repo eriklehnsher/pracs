@@ -15,7 +15,7 @@ import logging
 class CrmLead(models.Model):
     _inherit = "crm.lead"
     min_revenue = fields.Float(string='Doanh thu tối thiểu(trước VAT)', default="", readonly=False, required=True)
-
+    lead_ids = fields.One2many('crm.lead', 'team_id', string='Leads')
     create_month = fields.Selection([
         ('01', 'January'),
         ('02', 'February'),
@@ -41,8 +41,6 @@ class CrmLead(models.Model):
             'view_mode': 'tree',
             'target': 'new',
         }
-
-
 
     def _compute_create_month(self):
         for record in self:

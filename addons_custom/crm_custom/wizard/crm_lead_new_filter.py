@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 from odoo.exceptions import UserError
 
 class CrmTeamFilter(models.Model):
-    _name = "crm.team.filter"
+    _name = "crm.lead.new.filter"
     _description = "CRM Team Filter"
 
     team_id = fields.Many2many("crm.team", string="Chọn Nhóm")
@@ -40,8 +40,8 @@ class CrmTeamFilter(models.Model):
             "name": "CRM Teams",
             "type": "ir.actions.act_window",
             "view_mode": "tree",
-            "res_model": "crm.team.new",
-            "views": [(self.env.ref("crm_custom.crm_team_view_tree").id, "tree")],
+            "res_model": "crm.lead.new.new",
+            "views": [(self.env.ref("crm_custom.crm_lead_view_tree").id, "tree")],
             "domain": [("id", "in", leads.ids)],
             "context": {"selected_month": selected_month},
         }

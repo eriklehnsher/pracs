@@ -1,10 +1,10 @@
 <odoo>
     <data>
-        <record id="view_crm_team_to_form" model="ir.ui.view">
-            <field name="name">crm.team.filter.form</field>
-            <field name="model">crm.team.filter</field>
+        <record id="view_crm_lead_new_to_form" model="ir.ui.view">
+            <field name="name">crm.lead.new.filter.form</field>
+            <field name="model">crm.lead.new.filter</field>
             <field name="arch" type="xml">
-                <form string="CRM Team Filter">
+                <form string="CRM lead Filter">
                     <group>
                         <field name="team_id"/>
                         <field name="month"/>
@@ -16,12 +16,12 @@
                 </form>
             </field>
         </record>
-        <record id="action_crm_team_filter" model="ir.actions.act_window">
+        <record id="action_crm_lead_new_filter" model="ir.actions.act_window">
             <field name="name">Báo Cáo Đánh Giá Chỉ Tiêu</field>
             <field name="res_model">crm.team.filter</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-        <menuitem id="menu_crm_team_filter" name="Báo Cáo Đánh Giá Chỉ Tiêu" parent="crm.crm_menu_report" action="action_crm_team_filter"/>
+        <menuitem id="menu_crm_lead_new_filter" name="Báo Cáo Đánh Giá Chỉ Tiêu" parent="crm.crm_menu_report" action="action_crm_lead_new_filter"/>
     </data>
 </odoo>
