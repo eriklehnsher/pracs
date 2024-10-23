@@ -10,7 +10,7 @@
         'wizard/crm_lead_oppor_filter_views.xml',
         'wizard/crm_lead_new_filter_views.xml',
         # 'wizard/crm_team_list_views.xml',
-        'views/crm_teams_views.xml',
+        'views/crm_lead_new_views.xml',
         'views/crm_team_inherit_views.xml',
         'views/crm_lead_inherit_views.xml',
         'views/assets.xml',
