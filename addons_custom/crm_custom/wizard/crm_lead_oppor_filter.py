@@ -28,7 +28,6 @@ class CrmLeadOpporFilter(models.TransientModel):
             'type': 'ir.actions.act_window',
             'res_model': 'crm.lead',
             'view_mode': 'tree',
-
             'views': [(self.env.ref('crm_custom.crm_lead_oppor_custom_views').id, 'tree')],
             'domain': [('id', 'in', oppors.ids)],
         }
