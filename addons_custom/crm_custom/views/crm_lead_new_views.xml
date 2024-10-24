@@ -5,10 +5,11 @@
             <field name="model">crm.lead.new</field>
             <field name="arch" type="xml">
                 <tree edit="0" create="0" delete="0">
-                    <field name="team_id"/>
-                    <field name="lead_id"/>
-                    <field name="sale_amount_total"/>
-                    <field name="target"/>
+                    <field name="team_id" string="Nhóm Bán Hàng"/>
+<!--                    <field name="lead_id" string="Cơ Hội"/>-->
+<!--                    <field name="create_date" string="Ngày Tạo"/>-->
+                    <field name="sale_amount_total" string="Doanh thu thực tế"/>
+                    <field name="target" string="Chỉ tiêu doanh thu theo tháng"/>
                 </tree>
             </field>
         </record>

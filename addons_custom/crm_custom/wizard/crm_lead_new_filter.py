@@ -3,7 +3,7 @@ from email.policy import default
 from odoo import models, fields
 from datetime import datetime
 from odoo.osv import expression
-
+from dateutil.relativedelta import relativedelta
 
 
 class CrmLeadNewFilter(models.Model):
@@ -19,33 +19,62 @@ class CrmLeadNewFilter(models.Model):
     )
 
     def action_apply_filter(self):
+        selected_month = int(self.month)
+        selected_year = datetime.today().year
+        start_date = datetime(selected_year, selected_month, 1)
+        end_date = start_date + relativedelta(months=1, days=-1)
         ids = []
+        opp_domain = [('create_date', '>=', start_date), ('create_date', '<=', end_date), ('type', '=', 'opportunity')]
         if self.team_ids:
-            lead_ids = self.env['crm.lead'].search([('team_id', 'in',  self.team_ids.ids)]).filtered(lambda l: l.create_date.month == int(self.month))
+            opp_domain.append(('team_id', 'in', self.team_ids.ids))
+            lead_ids = self.env['crm.lead'].search(opp_domain)
         else:
-            lead_ids = self.env['crm.lead'].search([]).filtered(
-                lambda l: l.create_date.month == int(self.month))
-
+            lead_ids = self.env['crm.lead'].search(opp_domain)
+        data = {}  # key: team_id, value: total_amount
         for lead in lead_ids:
-            domain = expression.AND([[('opportunity_id', '=', lead.id)], lead._get_lead_sale_order_domain()])
-            order_ids = self.env['sale.order'].search(domain)
-
+            amount = 0
+            # find related sale order
+            order_domain = [('opportunity_id', '=', lead.id), ('state', '=', 'sale')]
+            orders = self.env['sale.order'].search(order_domain)
+            if orders:
+                amount = sum(order.amount_total for order in orders)
+            if lead.team_id not in data:
+                data[lead.team_id] = amount
+            else:
+                data[lead.team_id] += amount
             target = 0
-            if self.month == '10':
+            if self.month == '1':
+                target = lead.team_id.target_jan
+            elif self.month == '2':
+                target = lead.team_id.target_feb
+            elif self.month == '3':
+                target = lead.team_id.target_mar
+            elif self.month == '4':
+                target = lead.team_id.target_apr
+            elif self.month == '5':
+                target = lead.team_id.target_may
+            elif self.month == '6':
+                target = lead.team_id.target_jun
+            elif self.month == '7':
+                target = lead.team_id.target_jul
+            elif self.month == '8':
+                target = lead.team_id.target_aug
+            elif self.month == '9':
+                target = lead.team_id.target_sep
+            elif self.month == '10':
                 target = lead.team_id.target_oct
             elif self.month == '11':
                 target = lead.team_id.target_nov
-
-            res_id = self.env['crm.lead.new'].create({
-                'lead_id': lead.id,
-                'team_id': lead.team_id.id,
-                'sale_amount_total': sum(order.amount_total for order in order_ids),
-                'target': target,
-            })
-            ids.append(res_id.id)
-
-        print(ids)
-
+            elif self.month == '12':
+                target = lead.team_id.target_dec
+        if len(data) > 0:
+            for k in data:
+                res_id = self.env['crm.lead.new'].create({
+                    'team_id': k.id,
+                    'sale_amount_total': data[k],
+                    'target': target,
+                })
+                ids.append(res_id.id)
         return {
             "name": "CRM Teams",
             "type": "ir.actions.act_window",
@@ -53,26 +82,5 @@ class CrmLeadNewFilter(models.Model):
             "res_model": "crm.lead.new",
             "views": [(self.env.ref("crm_custom.view_crm_lead_new_to_tree").id, "tree")],
             "domain": [("id", "in", ids)],
-            # "context": {"selected_month": selected_month},
+
         }
-
-
-        # selected_month = int(self.month) if self.month else False
-        # current_year = datetime.now().year
-        # if selected_month:
-        #     start_date = datetime(current_year, selected_month, 1)
-        #     end_date = start_date + relativedelta(months=1)
-        # else:
-        #     start_date, end_date = None, None
-        # domain = []
-        # if start_date:
-        #     domain.append(("create_date", ">=", start_date))
-        # if end_date:
-        #     domain.append(("create_date", "<=", end_date))
-        # if self.team_id:
-        #     domain.append(("team_id", "in", self.team_id.ids))
-        # leads = self.env["crm.lead"].search(domain)
-        # if not leads:
-        #    raise UserError('No leads found for the selected criteria.')
-        #
-
