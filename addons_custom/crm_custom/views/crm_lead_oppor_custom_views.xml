@@ -6,7 +6,7 @@
             <field name="arch" type="html">
                 <tree string="Opportunity">
                     <field name="name" string="Cơ Hội"/>
-                    <field name="create_date" string="ngày tạo"/>
+<!--                    <field name="create_date" string="ngày tạo"/>-->
                     <field name="user_id" string="Nhân viên kinh doanh"/>
                     <field name="team_id" string="Nhóm Bán Hàng"/>
                     <field name="min_revenue" string="Doanh thu tối thiểu"/>
