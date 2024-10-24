@@ -6,7 +6,7 @@
             <field name="inherit_id" ref="hr.view_department_form"/>
             <field name="arch" type="xml">
                <xpath expr="//field[@name='manager_id']" position="before">
-                    <field name="'limit_amount_per_month'"/>
+                    <field name="limit_amount_per_month"/>
                 </xpath>
             </field>
         </record>

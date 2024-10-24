@@ -36,6 +36,7 @@ class CrmLeadNewFilter(models.Model):
             # find related sale order
             order_domain = [('opportunity_id', '=', lead.id), ('state', '=', 'sale')]
             orders = self.env['sale.order'].search(order_domain)
+            print(orders, 'orders')
             if orders:
                 amount = sum(order.amount_total for order in orders)
             if lead.team_id not in data:
@@ -67,6 +68,8 @@ class CrmLeadNewFilter(models.Model):
                 target = lead.team_id.target_nov
             elif self.month == '12':
                 target = lead.team_id.target_dec
+
+        print(data, 'data')
         if len(data) > 0:
             for k in data:
                 res_id = self.env['crm.lead.new'].create({
